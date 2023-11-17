@@ -49,6 +49,27 @@ function getWeatherData() {
             var cityName = data[0].name;
             console.log(cityName);
 
+            var currentWeather = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+
+            fetch(currentWeather)
+                .then(function(response) {
+                    return response.json();
+                }).then(function(data) {
+                    console.log(data);
+
+                    var today = {
+                        date: dayjs().$d,
+                        city: data.name,
+                        icon: data.weather[0].icon,
+                        temperature: data.main.temp,
+                        wind: data.wind.speed,
+                        humidity: data.main.humidity
+                    };
+                    
+                    localStorage.setItem(cityName, JSON.stringify(today));
+                    console.log(today);
+                });
+
             var forecast = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
             console.log(forecast);
 
@@ -57,18 +78,6 @@ function getWeatherData() {
                     return response.json();
                 }).then(function(data){
                     console.log(data);
-
-                    var today = {
-                        date: dayjs().$d,
-                        city: data.city.name,
-                        icon: data.list[0].weather[0].icon,
-                        temperature: data.list[0].main.temp,
-                        wind: data.list[0].wind.speed,
-                        humidity: data.list[0].main.humidity
-                    };
-                    
-                    localStorage.setItem(cityName, JSON.stringify(today));
-                    console.log(today);
 
                     var fiveDayForecast = {
                         day1: {
