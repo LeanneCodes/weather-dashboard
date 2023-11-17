@@ -169,31 +169,36 @@ function displayWeatherData() {
     sectionForecastDiv.appendChild(cardContainer);
 
     // convert the forecast day one data into an array
-    var dayOneDataArray = Object.values(forecastData);
-    console.log(dayOneDataArray);
+    var forecastArray = Object.values(forecastData);
+    console.log(forecastArray);
 
-    for (var i = 0; i < dayOneDataArray.length; i++) {
+    for (var i = 0; i < forecastArray.length; i++) {
         var divEl = document.createElement("div");
         divEl.setAttribute("class", "col");
         divEl.setAttribute("style", "border: 1px solid green");
         cardContainer.append(divEl);
 
         var cardDate = document.createElement("h4");
-        cardDate.textContent = dayOneDataArray[i].date;
+        cardDate.textContent = forecastArray[i].date.slice(0,-9);
         console.log(cardDate);
         divEl.append(cardDate);
+
+        var cardIcon = document.createElement("p");
+        cardIcon.textContent = forecastArray[i].icon;
+        divEl.append(cardIcon);
+
+        var tempData = document.createElement("p");
+        tempData.textContent = "Temp: " + forecastArray[i].temperature;
+        divEl.append(tempData);
+
+        var windData = document.createElement("p");
+        windData.textContent = "Wind Speed: " + forecastArray[i].wind;
+        divEl.append(windData);
+
+        var humidityData = document.createElement("p");
+        humidityData.textContent = "Humidity: " + forecastArray[i].humidity;
+        divEl.append(humidityData);
     }
-
-    // // day 1 forecast inside card container with the col class from bootstrap
-    // var cardOne = document.createElement("div");
-    // cardOne.setAttribute("class", "col");
-    // cardOne.setAttribute("style", "border: 1px solid green");
-    // cardContainer.append(cardOne);
-
-    // // day 1 date
-    // var cardOneDate = document.createElement("h4");
-    // cardOneDate.textContent = forecastData.day1.date;
-    // cardOne.append(cardOneDate);
     
 }
 
