@@ -19,8 +19,14 @@ fetch(geoQuery)
         var cityName = data[0].name;
         console.log(cityName);
 
-        var forecast = `api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+        var forecast = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
         console.log(forecast);
+
+        fetch(forecast)
+            .then(function(response) {
+                return response.json();
+            }).then(function(data){
+                console.log(data);
+            })
     });
 
- 
