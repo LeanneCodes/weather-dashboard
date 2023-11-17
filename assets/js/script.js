@@ -19,6 +19,8 @@ submitBtn.addEventListener('click', function(event) {
     A new button is created for each city name and is appended to the dashboard.
     Two fetch queries run so that we can retrieve information that we want from
     each city.
+    Both current weather and 5 day forecast weather is retrieved for each city call
+    and the data is stored in local storage.
 */
 function getWeatherData() {
     var cityName = localStorage.getItem("City Name");
@@ -110,7 +112,36 @@ function getWeatherData() {
                     console.log(fiveDayForecast);
                 })
         });
-}
+};
 
+var currentCity = localStorage.getItem("City Name");
+console.log(currentCity);
 
+// creating the today section of the dashboard
+var todaySection = document.getElementById("today");
+var forecastSection = document.getElementById("forecast");
 
+// create div for the today section
+var sectionTodayDiv = document.createElement("div");
+sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
+todaySection.append(sectionTodayDiv);
+
+// create h1 and p tags for today section
+var todayData = JSON.parse(localStorage.getItem(currentCity));
+console.log(todayData);
+var cityDisplay = document.createElement("h2");
+cityDisplay.textContent = todayData.city + ": (" + todayData.date.slice(0,-14) + ")" + todayData.icon;
+console.log(cityDisplay.textContent);
+sectionTodayDiv.append(cityDisplay);
+
+var tempData = document.createElement("p");
+tempData.textContent = "Temp: " + todayData.temperature;
+sectionTodayDiv.append(tempData);
+
+var windData = document.createElement("p");
+windData.textContent = "Wind Speed: " + todayData.wind;
+sectionTodayDiv.append(windData);
+
+var humidityData = document.createElement("p");
+humidityData.textContent = "Humidity: " + todayData.humidity;
+sectionTodayDiv.append(humidityData);
