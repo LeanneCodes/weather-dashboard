@@ -106,7 +106,7 @@ function getWeatherData() {
                         }
                     };
 
-                    localStorage.setItem("5 Day Forecast", JSON.stringify(fiveDayForecast));
+                    localStorage.setItem(cityName + " - 5 Day Forecast", JSON.stringify(fiveDayForecast));
                     console.log(fiveDayForecast);
                 })
         });
