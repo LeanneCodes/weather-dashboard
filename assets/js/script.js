@@ -114,34 +114,87 @@ function getWeatherData() {
         });
 };
 
-var currentCity = localStorage.getItem("City Name");
-console.log(currentCity);
 
-// creating the today section of the dashboard
-var todaySection = document.getElementById("today");
-var forecastSection = document.getElementById("forecast");
+function displayWeatherData() {
+    var currentCity = localStorage.getItem("City Name");
+    console.log(currentCity);
 
-// create div for the today section
-var sectionTodayDiv = document.createElement("div");
-sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
-todaySection.append(sectionTodayDiv);
+    // create the two weather sections of the dashboard
+    var todaySection = document.getElementById("today");
+    var forecastSection = document.getElementById("forecast");
 
-// create h1 and p tags for today section
-var todayData = JSON.parse(localStorage.getItem(currentCity));
-console.log(todayData);
-var cityDisplay = document.createElement("h2");
-cityDisplay.textContent = todayData.city + ": (" + todayData.date.slice(0,-14) + ")" + todayData.icon;
-console.log(cityDisplay.textContent);
-sectionTodayDiv.append(cityDisplay);
+    // create div for the today section
+    var sectionTodayDiv = document.createElement("div");
+    sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
+    todaySection.append(sectionTodayDiv);
 
-var tempData = document.createElement("p");
-tempData.textContent = "Temp: " + todayData.temperature;
-sectionTodayDiv.append(tempData);
+    // create h1 and p tags for today section
+    var todayData = JSON.parse(localStorage.getItem(currentCity));
+    console.log(todayData);
+    var cityDisplay = document.createElement("h2");
+    cityDisplay.textContent = todayData.city + ": (" + todayData.date.slice(0,-14) + ")" + todayData.icon;
+    console.log(cityDisplay.textContent);
+    sectionTodayDiv.append(cityDisplay);
 
-var windData = document.createElement("p");
-windData.textContent = "Wind Speed: " + todayData.wind;
-sectionTodayDiv.append(windData);
+    var tempData = document.createElement("p");
+    tempData.textContent = "Temp: " + todayData.temperature;
+    sectionTodayDiv.append(tempData);
 
-var humidityData = document.createElement("p");
-humidityData.textContent = "Humidity: " + todayData.humidity;
-sectionTodayDiv.append(humidityData);
+    var windData = document.createElement("p");
+    windData.textContent = "Wind Speed: " + todayData.wind;
+    sectionTodayDiv.append(windData);
+
+    var humidityData = document.createElement("p");
+    humidityData.textContent = "Humidity: " + todayData.humidity;
+    sectionTodayDiv.append(humidityData);
+
+    // create the div for the forecast section
+    var forecastData = JSON.parse(localStorage.getItem(currentCity + " - 5 Day Forecast"));
+    console.log(forecastData);
+
+    var sectionForecastDiv = document.createElement("div");
+    sectionForecastDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
+    sectionForecastDiv.setAttribute("class", "container-fluid");
+    forecastSection.append(sectionForecastDiv);
+
+    // 5-day forecast title
+    var forecastTitle = document.createElement("h3");
+    forecastTitle.textContent = "5-Day Forecast:";
+    sectionForecastDiv.append(forecastTitle);
+
+    // card container
+    var cardContainer = document.createElement("div");
+    cardContainer.setAttribute("class", "row");
+    cardContainer.setAttribute("style", "border: 1px solid blue");
+    sectionForecastDiv.appendChild(cardContainer);
+
+    // convert the forecast day one data into an array
+    var dayOneDataArray = Object.values(forecastData);
+    console.log(dayOneDataArray);
+
+    for (var i = 0; i < dayOneDataArray.length; i++) {
+        var divEl = document.createElement("div");
+        divEl.setAttribute("class", "col");
+        divEl.setAttribute("style", "border: 1px solid green");
+        cardContainer.append(divEl);
+
+        var cardDate = document.createElement("h4");
+        cardDate.textContent = dayOneDataArray[i].date;
+        console.log(cardDate);
+        divEl.append(cardDate);
+    }
+
+    // // day 1 forecast inside card container with the col class from bootstrap
+    // var cardOne = document.createElement("div");
+    // cardOne.setAttribute("class", "col");
+    // cardOne.setAttribute("style", "border: 1px solid green");
+    // cardContainer.append(cardOne);
+
+    // // day 1 date
+    // var cardOneDate = document.createElement("h4");
+    // cardOneDate.textContent = forecastData.day1.date;
+    // cardOne.append(cardOneDate);
+    
+}
+
+displayWeatherData();
