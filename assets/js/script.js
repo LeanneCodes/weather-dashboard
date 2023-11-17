@@ -13,6 +13,12 @@ submitBtn.addEventListener('click', function(event) {
 
 function getWeatherData() {
     var cityName = localStorage.getItem("City Name");
+    var cityBtn = document.createElement("button");
+    cityBtn.textContent = cityName;
+    cityBtn.classList.add("btn", "cityBtn");
+    cityBtn.setAttribute("value",cityName )
+    var citySearches = document.querySelector(".input-group-append");
+    citySearches.append(cityBtn);
 
     var geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
     console.log(geoQuery);
