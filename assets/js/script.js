@@ -1,5 +1,16 @@
 var apiKey = "f142d21647feca195690187a6be73e98";
-var cityName = "London";
+
+function getCityName(event) {
+    event.preventDefault();
+    var searchInput = document.getElementById("search-input").value;
+    var cityName = searchInput;
+    console.log(cityName);
+    return cityName;
+}
+
+var submitBtn = document.getElementById("search-button");
+submitBtn.addEventListener('click', getCityName);
+
 
 var geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
 console.log(geoQuery);
