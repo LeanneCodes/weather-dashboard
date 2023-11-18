@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var recentWeatherData = localStorage.getItem("City Name");
 
     if (recentWeatherData) {
-        displayWeatherData(recentWeatherData);
+        getWeatherData(recentWeatherData);
     };
 });
 
@@ -20,14 +20,14 @@ submitBtn.addEventListener('click', function(event) {
     searchForm.reset();
     event.preventDefault();
     console.log(searchInput);
-    getWeatherData(searchInput);
-    displayWeatherData(searchInput);
+    
 
 
     if (searchInput !== "") {
         localStorage.setItem("City Name", searchInput);
         createButton(searchInput);
-        
+        getWeatherData(searchInput);
+        displayWeatherData(searchInput);
         
     } else {
         submitBtn.setAttribute("disabled", "disabled");
