@@ -148,8 +148,8 @@ function getWeatherData(cityName) {
 
 
 function displayWeatherData(cityName) {
-    var currentCity = cityName;
-    console.log(currentCity);
+    // var cityName = cityName;
+    // console.log(cityName);
 
     // create the two weather sections of the dashboard
     var todaySection = document.getElementById("today");
@@ -163,12 +163,12 @@ function displayWeatherData(cityName) {
     var sectionTodayDiv = document.createElement("div");
     sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
     sectionTodayDiv.setAttribute("class", "container-fluid");
-    sectionTodayDiv.setAttribute("data-city", currentCity);
+    sectionTodayDiv.setAttribute("data-city", cityName);
     console.log(sectionTodayDiv.dataset.city);
     todaySection.prepend(sectionTodayDiv);
 
     // create h1 and p tags for today section
-    var todayData = JSON.parse(localStorage.getItem(currentCity));
+    var todayData = JSON.parse(localStorage.getItem(cityName));
     console.log(todayData);
     var cityDisplay = document.createElement("h2");
     cityDisplay.textContent = todayData.city + ": (" + todayData.date.slice(0,-14) + ")" + todayData.icon;
@@ -188,13 +188,13 @@ function displayWeatherData(cityName) {
     sectionTodayDiv.append(humidityData);
 
     // create the div for the forecast section
-    var forecastData = JSON.parse(localStorage.getItem(currentCity + " - 5 Day Forecast"));
+    var forecastData = JSON.parse(localStorage.getItem(cityName + " - 5 Day Forecast"));
     console.log(forecastData);
 
     var sectionForecastDiv = document.createElement("div");
     sectionForecastDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
     sectionForecastDiv.setAttribute("class", "container-fluid");
-    sectionForecastDiv.setAttribute("data-city", currentCity);
+    sectionForecastDiv.setAttribute("data-city", cityName);
     forecastSection.prepend(sectionForecastDiv);
 
     // 5-day forecast title
