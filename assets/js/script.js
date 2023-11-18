@@ -202,10 +202,17 @@ function displayWeatherData(cityName) {
     // create h1 and p tags for today section
     var todayData = JSON.parse(localStorage.getItem(cityName));
     console.log(todayData);
+
     var cityDisplay = document.createElement("h2");
-    cityDisplay.textContent = todayData.city + ": (" + todayData.date.slice(0,-14) + ")" + todayData.icon;
+    cityDisplay.textContent = todayData.city + ": (" + todayData.date.slice(0,-14) + ")";
     console.log(cityDisplay.textContent);
     sectionTodayDiv.append(cityDisplay);
+
+    // create an img tag dynamically for the weather icon
+    var iconImg = document.createElement("img");
+    iconImg.src = `http://openweathermap.org/img/wn/${todayData.icon}.png`;
+    iconImg.alt = "Weather Icon";
+    sectionTodayDiv.append(iconImg);
 
     var tempData = document.createElement("p");
     tempData.textContent = "Temp: " + todayData.temperature;
@@ -256,8 +263,9 @@ function displayWeatherData(cityName) {
         console.log(cardDate);
         divEl.append(cardDate);
 
-        var cardIcon = document.createElement("p");
-        cardIcon.textContent = forecastArray[i].icon;
+        var cardIcon = document.createElement("img");
+        cardIcon.src = `http://openweathermap.org/img/wn/${forecastArray[i].icon}.png`;
+        cardIcon.alt = "Weather Icon";
         divEl.append(cardIcon);
 
         var tempData = document.createElement("p");
