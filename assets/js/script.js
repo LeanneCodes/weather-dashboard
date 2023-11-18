@@ -163,9 +163,7 @@ function displayWeatherData(cityName) {
     sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
     sectionTodayDiv.setAttribute("class", "container-fluid");
     sectionTodayDiv.setAttribute("data-city", currentCity);
-    console.log(sectionTodayDiv.dataset.city)
-    // var datasetCity = sectionTodayDiv.dataset.city;
-    
+    console.log(sectionTodayDiv.dataset.city);
     todaySection.prepend(sectionTodayDiv);
 
     // create h1 and p tags for today section
