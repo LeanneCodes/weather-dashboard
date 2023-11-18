@@ -8,11 +8,18 @@ submitBtn.addEventListener('click', function(event) {
     var searchInput = document.getElementById("search-input").value;
     event.preventDefault();
     console.log(searchInput);
-    localStorage.setItem("City Name", searchInput);
-    getWeatherData();
-    displayWeatherData();
-    var searchForm = document.getElementById("search-form");
-    searchForm.reset();
+    if (searchInput !== "") {
+        submitBtn.setAttribute("disabled", false);
+        localStorage.setItem("City Name", searchInput);
+        getWeatherData();
+        displayWeatherData();
+        var searchForm = document.getElementById("search-form");
+        searchForm.reset();
+    } else {
+        submitBtn.setAttribute("disabled", "disabled");
+        alert("Please enter a valid city name.");
+    }
+    
 });
 
 /*
@@ -138,6 +145,8 @@ function displayWeatherData() {
     // create div for the today section
     var sectionTodayDiv = document.createElement("div");
     sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
+    sectionTodayDiv.setAttribute("class", "container-fluid");
+    sectionTodayDiv.setAttribute("data-city", currentCity);
     todaySection.append(sectionTodayDiv);
 
     // create h1 and p tags for today section
@@ -167,6 +176,7 @@ function displayWeatherData() {
     var sectionForecastDiv = document.createElement("div");
     sectionForecastDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
     sectionForecastDiv.setAttribute("class", "container-fluid");
+    sectionForecastDiv.setAttribute("data-city", currentCity);
     forecastSection.append(sectionForecastDiv);
 
     // 5-day forecast title
