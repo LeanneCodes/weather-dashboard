@@ -10,6 +10,7 @@ submitBtn.addEventListener('click', function(event) {
     console.log(searchInput);
     localStorage.setItem("City Name", searchInput);
     getWeatherData();
+    displayWeatherData();
     var searchForm = document.getElementById("search-form");
     searchForm.reset();
 });
@@ -27,9 +28,9 @@ function getWeatherData() {
     var cityBtn = document.createElement("button");
     cityBtn.textContent = cityName;
     cityBtn.classList.add("btn", "cityBtn");
-    cityBtn.setAttribute("value",cityName )
-    var citySearches = document.querySelector(".input-group-append");
-    citySearches.append(cityBtn);
+    cityBtn.setAttribute("value", cityName);
+    var searchHistory = document.getElementById("history");
+    searchHistory.append(cityBtn);
 
     var geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
     console.log(geoQuery);
@@ -121,6 +122,8 @@ function getWeatherData() {
                     console.log(fiveDayForecast);
                 })
         });
+    
+        
 };
 
 
@@ -207,8 +210,6 @@ function displayWeatherData() {
         var humidityData = document.createElement("p");
         humidityData.textContent = "Humidity: " + forecastArray[i].humidity;
         divEl.append(humidityData);
-    }
-    
-}
+    };
+};
 
-displayWeatherData();
