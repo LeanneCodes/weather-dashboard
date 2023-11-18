@@ -1,3 +1,12 @@
+document.addEventListener("DOMContentLoaded", function() {
+    var recentWeatherData = localStorage.getItem("City Name");
+
+    if (recentWeatherData) {
+        displayWeatherData(recentWeatherData);
+    };
+});
+
+
 var apiKey = "f142d21647feca195690187a6be73e98";
 
 // user inputs a city name and then clicks the search button
@@ -44,19 +53,24 @@ searchHistory.addEventListener('click', function(event) {
 
 
 function createButton(cityName) {
-    var btnArray = [];
-    cityName = localStorage.getItem("City Name");
+    // cityName = localStorage.getItem("City Name");
     var cityBtn = document.createElement("button");
     cityBtn.textContent = cityName;
     cityBtn.classList.add("btn", "cityBtn");
     cityBtn.setAttribute("value", cityName);
-    btnArray.push(cityBtn);
-    console.log(btnArray);
     searchHistory.append(cityBtn);
-
     console.log(cityName);
 };
 
+
+function displayButtons() {
+    var cities = Object.keys(localStorage);
+    cities.forEach(function(city) {
+        if (city !== "City Name" && !city.includes(' - 5 Day Forecast')) {
+            createButton(city);
+        }
+    })
+}
 
 function getWeatherData(cityName) {
     var geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
@@ -149,8 +163,6 @@ function getWeatherData(cityName) {
                     console.log(fiveDayForecast);
                 })
         });
-    
-        
 };
 
 
@@ -243,12 +255,6 @@ function displayWeatherData(cityName) {
         humidityData.textContent = "Humidity: " + forecastArray[i].humidity;
         divEl.append(humidityData);
     };
+
+    displayButtons();
 };
-
-document.addEventListener("DOMContentLoaded", function() {
-    var recentWeatherData = localStorage.getItem("City Name");
-
-    if (recentWeatherData) {
-        displayWeatherData(recentWeatherData);
-    };
-})
