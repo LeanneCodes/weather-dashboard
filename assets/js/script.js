@@ -8,19 +8,21 @@ submitBtn.addEventListener('click', function(event) {
     var searchInput = document.getElementById("search-input").value;
     event.preventDefault();
     console.log(searchInput);
+
     if (searchInput !== "") {
-        submitBtn.setAttribute("disabled", false);
         localStorage.setItem("City Name", searchInput);
         getWeatherData();
-        displayWeatherData();
+        
         var searchForm = document.getElementById("search-form");
         searchForm.reset();
     } else {
         submitBtn.setAttribute("disabled", "disabled");
         alert("Please enter a valid city name.");
+        location.reload();
     }
     
 });
+
 
 /*
     The city name is retrieved from local storage and stored as a variable.
@@ -30,6 +32,9 @@ submitBtn.addEventListener('click', function(event) {
     Both current weather and 5 day forecast weather is retrieved for each city call
     and the data is stored in local storage.
 */
+
+
+
 function getWeatherData() {
     var cityName = localStorage.getItem("City Name");
     var cityBtn = document.createElement("button");
@@ -38,6 +43,15 @@ function getWeatherData() {
     cityBtn.setAttribute("value", cityName);
     var searchHistory = document.getElementById("history");
     searchHistory.append(cityBtn);
+
+    searchHistory.addEventListener('click', function(event) {
+        event.preventDefault();
+        console.log(event.target.textContent);
+        cityName = event.target.textContent;
+        displayWeatherData();
+    });
+
+    console.log(cityName);
 
     var geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
     console.log(geoQuery);
@@ -147,7 +161,10 @@ function displayWeatherData() {
     sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
     sectionTodayDiv.setAttribute("class", "container-fluid");
     sectionTodayDiv.setAttribute("data-city", currentCity);
-    todaySection.append(sectionTodayDiv);
+    console.log(sectionTodayDiv.dataset.city)
+    var datasetCity = sectionTodayDiv.dataset.city;
+    
+    todaySection.prepend(sectionTodayDiv);
 
     // create h1 and p tags for today section
     var todayData = JSON.parse(localStorage.getItem(currentCity));
@@ -177,7 +194,7 @@ function displayWeatherData() {
     sectionForecastDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
     sectionForecastDiv.setAttribute("class", "container-fluid");
     sectionForecastDiv.setAttribute("data-city", currentCity);
-    forecastSection.append(sectionForecastDiv);
+    forecastSection.prepend(sectionForecastDiv);
 
     // 5-day forecast title
     var forecastTitle = document.createElement("h3");
