@@ -16,23 +16,24 @@ var apiKey = "f142d21647feca195690187a6be73e98";
 var submitBtn = document.getElementById("search-button");
 submitBtn.addEventListener('click', function(event) {
     var searchInput = document.getElementById("search-input").value;
+    var searchForm = document.getElementById("search-form");
+    searchForm.reset();
     event.preventDefault();
     console.log(searchInput);
+    getWeatherData(searchInput);
+    displayWeatherData(searchInput);
+
 
     if (searchInput !== "") {
         localStorage.setItem("City Name", searchInput);
-        getWeatherData(searchInput);
-        displayWeatherData(searchInput);
         createButton(searchInput);
         
-        var searchForm = document.getElementById("search-form");
-        searchForm.reset();
+        
     } else {
         submitBtn.setAttribute("disabled", "disabled");
         alert("Please enter a valid city name.");
         location.reload();
     };
-
 });
 
 
@@ -172,7 +173,11 @@ function getWeatherData(cityName) {
                     localStorage.setItem(cityName + " - 5 Day Forecast", JSON.stringify(fiveDayForecast));
                     console.log(fiveDayForecast);
                 })
+                .then(function() {
+                    displayWeatherData(cityName);
+                })
         });
+
 };
 
 
