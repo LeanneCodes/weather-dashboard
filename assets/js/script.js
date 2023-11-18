@@ -32,8 +32,13 @@ submitBtn.addEventListener('click', function(event) {
     Both current weather and 5 day forecast weather is retrieved for each city call
     and the data is stored in local storage.
 */
-
-
+var searchHistory = document.getElementById("history");
+searchHistory.addEventListener('click', function(event) {
+    event.preventDefault();
+    console.log(event.target.textContent);
+    var clickedCityName = event.target.textContent;
+    displayWeatherData(clickedCityName);
+});
 
 function getWeatherData() {
     var cityName = localStorage.getItem("City Name");
@@ -41,15 +46,8 @@ function getWeatherData() {
     cityBtn.textContent = cityName;
     cityBtn.classList.add("btn", "cityBtn");
     cityBtn.setAttribute("value", cityName);
-    var searchHistory = document.getElementById("history");
+    
     searchHistory.append(cityBtn);
-
-    searchHistory.addEventListener('click', function(event) {
-        event.preventDefault();
-        console.log(event.target.textContent);
-        cityName = event.target.textContent;
-        displayWeatherData();
-    });
 
     console.log(cityName);
 
@@ -148,13 +146,17 @@ function getWeatherData() {
 };
 
 
-function displayWeatherData() {
-    var currentCity = localStorage.getItem("City Name");
+function displayWeatherData(cityName) {
+    var currentCity = cityName;
     console.log(currentCity);
 
     // create the two weather sections of the dashboard
     var todaySection = document.getElementById("today");
     var forecastSection = document.getElementById("forecast");
+
+    // clear existing content within the prebuilt sections
+    todaySection.innerHTML = "";
+    forecastSection.innerHTML = "";
 
     // create div for the today section
     var sectionTodayDiv = document.createElement("div");
@@ -162,7 +164,7 @@ function displayWeatherData() {
     sectionTodayDiv.setAttribute("class", "container-fluid");
     sectionTodayDiv.setAttribute("data-city", currentCity);
     console.log(sectionTodayDiv.dataset.city)
-    var datasetCity = sectionTodayDiv.dataset.city;
+    // var datasetCity = sectionTodayDiv.dataset.city;
     
     todaySection.prepend(sectionTodayDiv);
 
