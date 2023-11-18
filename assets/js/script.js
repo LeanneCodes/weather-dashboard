@@ -11,7 +11,8 @@ submitBtn.addEventListener('click', function(event) {
 
     if (searchInput !== "") {
         localStorage.setItem("City Name", searchInput);
-        getWeatherData();
+        getWeatherData(searchInput);
+        displayWeatherData(searchInput);
         
         var searchForm = document.getElementById("search-form");
         searchForm.reset();
@@ -40,8 +41,8 @@ searchHistory.addEventListener('click', function(event) {
     displayWeatherData(clickedCityName);
 });
 
-function getWeatherData() {
-    var cityName = localStorage.getItem("City Name");
+function getWeatherData(cityName) {
+    cityName = localStorage.getItem("City Name");
     var cityBtn = document.createElement("button");
     cityBtn.textContent = cityName;
     cityBtn.classList.add("btn", "cityBtn");
