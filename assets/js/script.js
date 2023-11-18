@@ -111,12 +111,12 @@ function getWeatherData(cityName) {
                     console.log(data);
 
                     var today = {
-                        date: dayjs().$d,
+                        date: dayjs(),
                         city: data.name,
                         icon: data.weather[0].icon,
-                        temperature: data.main.temp,
-                        wind: data.wind.speed,
-                        humidity: data.main.humidity
+                        temperature: (data.main.temp - 273.15).toFixed(0) + ' °C',
+                        wind: (data.wind.speed * 2.23294).toFixed(0) + ' mph', // returns the mph
+                        humidity: data.main.humidity + "%"
                     };
                     
                     localStorage.setItem(cityName, JSON.stringify(today));
@@ -204,7 +204,7 @@ function displayWeatherData(cityName) {
     console.log(todayData);
 
     var cityDisplay = document.createElement("h2");
-    cityDisplay.textContent = todayData.city + ": (" + todayData.date.slice(0,-14) + ")";
+    cityDisplay.textContent = todayData.city + " (" + todayData.date.slice(0,-14) + ")";
     console.log(cityDisplay.textContent);
     sectionTodayDiv.append(cityDisplay);
 
@@ -269,15 +269,15 @@ function displayWeatherData(cityName) {
         divEl.append(cardIcon);
 
         var tempData = document.createElement("p");
-        tempData.textContent = "Temp: " + forecastArray[i].temperature;
+        tempData.textContent = "Temp: " + (forecastArray[i].temperature - 273.15).toFixed(0) + ' °C';
         divEl.append(tempData);
 
         var windData = document.createElement("p");
-        windData.textContent = "Wind Speed: " + forecastArray[i].wind;
+        windData.textContent = "Wind Speed: " + (forecastArray[i].wind).toFixed(0) + ' mph';
         divEl.append(windData);
 
         var humidityData = document.createElement("p");
-        humidityData.textContent = "Humidity: " + forecastArray[i].humidity;
+        humidityData.textContent = "Humidity: " + forecastArray[i].humidity + "%";
         divEl.append(humidityData);
     };
 
