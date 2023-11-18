@@ -13,6 +13,7 @@ submitBtn.addEventListener('click', function(event) {
         localStorage.setItem("City Name", searchInput);
         getWeatherData(searchInput);
         displayWeatherData(searchInput);
+        createButton(searchInput);
         
         var searchForm = document.getElementById("search-form");
         searchForm.reset();
@@ -20,8 +21,8 @@ submitBtn.addEventListener('click', function(event) {
         submitBtn.setAttribute("disabled", "disabled");
         alert("Please enter a valid city name.");
         location.reload();
-    }
-    
+    };
+
 });
 
 
@@ -41,17 +42,23 @@ searchHistory.addEventListener('click', function(event) {
     displayWeatherData(clickedCityName);
 });
 
-function getWeatherData(cityName) {
+
+function createButton(cityName) {
+    var btnArray = [];
     cityName = localStorage.getItem("City Name");
     var cityBtn = document.createElement("button");
     cityBtn.textContent = cityName;
     cityBtn.classList.add("btn", "cityBtn");
     cityBtn.setAttribute("value", cityName);
-    
+    btnArray.push(cityBtn);
+    console.log(btnArray);
     searchHistory.append(cityBtn);
 
     console.log(cityName);
+};
 
+
+function getWeatherData(cityName) {
     var geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
     console.log(geoQuery);
 
@@ -148,9 +155,6 @@ function getWeatherData(cityName) {
 
 
 function displayWeatherData(cityName) {
-    // var cityName = cityName;
-    // console.log(cityName);
-
     // create the two weather sections of the dashboard
     var todaySection = document.getElementById("today");
     var forecastSection = document.getElementById("forecast");
@@ -241,3 +245,10 @@ function displayWeatherData(cityName) {
     };
 };
 
+document.addEventListener("DOMContentLoaded", function() {
+    var recentWeatherData = localStorage.getItem("City Name");
+
+    if (recentWeatherData) {
+        displayWeatherData(recentWeatherData);
+    };
+})
