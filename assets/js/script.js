@@ -59,7 +59,7 @@ function createButton(cityName) {
     if (!document.querySelector(`.cityBtn[value="${cityName}"]`)) {
         var cityBtn = document.createElement("button");
         cityBtn.textContent = cityName;
-        cityBtn.classList.add("btn", "cityBtn");
+        cityBtn.classList.add("btn", "cityBtn", "btn-secondary");
         cityBtn.setAttribute("value", cityName);
         searchHistory.append(cityBtn);
         console.log(cityName);
@@ -114,7 +114,7 @@ function getWeatherData(cityName) {
                         date: dayjs(),
                         city: data.name,
                         icon: data.weather[0].icon,
-                        temperature: (data.main.temp - 273.15).toFixed(0) + ' °C',
+                        temperature: (data.main.temp - 273.15).toFixed(2) + ' °C',
                         wind: (data.wind.speed * 2.23294).toFixed(0) + ' mph', // returns the mph
                         humidity: data.main.humidity + "%"
                     };
@@ -231,7 +231,7 @@ function displayWeatherData(cityName) {
     console.log(forecastData);
 
     var sectionForecastDiv = document.createElement("div");
-    sectionForecastDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
+    sectionForecastDiv.setAttribute("style", "padding: 15px;");
     sectionForecastDiv.setAttribute("class", "container-fluid");
     sectionForecastDiv.setAttribute("data-city", cityName);
     forecastSection.prepend(sectionForecastDiv);
@@ -244,7 +244,6 @@ function displayWeatherData(cityName) {
     // card container
     var cardContainer = document.createElement("div");
     cardContainer.setAttribute("class", "row");
-    cardContainer.setAttribute("style", "border: 1px solid blue");
     sectionForecastDiv.appendChild(cardContainer);
 
     // convert the forecast day one data into an array
@@ -254,11 +253,10 @@ function displayWeatherData(cityName) {
     // iterate through the array and append the values on screen dynamically
     for (var i = 0; i < forecastArray.length; i++) {
         var divEl = document.createElement("div");
-        divEl.setAttribute("class", "col");
-        divEl.setAttribute("style", "border: 1px solid green");
+        divEl.setAttribute("class", "col weather-card");
         cardContainer.append(divEl);
 
-        var cardDate = document.createElement("h4");
+        var cardDate = document.createElement("h5");
         cardDate.textContent = forecastArray[i].date.slice(0,-9);
         console.log(cardDate);
         divEl.append(cardDate);
@@ -269,7 +267,7 @@ function displayWeatherData(cityName) {
         divEl.append(cardIcon);
 
         var tempData = document.createElement("p");
-        tempData.textContent = "Temp: " + (forecastArray[i].temperature - 273.15).toFixed(0) + ' °C';
+        tempData.textContent = "Temp: " + (forecastArray[i].temperature - 273.15).toFixed(2) + ' °C';
         divEl.append(tempData);
 
         var windData = document.createElement("p");
