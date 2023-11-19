@@ -63,12 +63,15 @@ searchHistory.addEventListener('click', function(event) {
 // only creates a new button if it doesn't currently exist based on the button's data value
 function createButton(cityName) {
     if (!document.querySelector(`.cityBtn[value="${cityName}"]`)) {
-        var cityBtn = document.createElement("button");
-        cityBtn.textContent = cityName;
-        cityBtn.classList.add("btn", "cityBtn", "btn-secondary");
-        cityBtn.setAttribute("value", cityName);
-        searchHistory.append(cityBtn);
-        console.log(cityName);
+        // checks if the city spelling exists in local storage
+        if (localStorage.getItem(cityName) && localStorage.getItem(cityName + " - 5 Day Forecast")) {
+            var cityBtn = document.createElement("button");
+            cityBtn.textContent = cityName;
+            cityBtn.classList.add("btn", "cityBtn", "btn-secondary");
+            cityBtn.setAttribute("value", cityName);
+            searchHistory.append(cityBtn);
+            console.log(cityName);
+        }
     }
 };
 
@@ -211,7 +214,7 @@ function displayWeatherData(cityName) {
     // create the div for the forecast section
     var forecastData = JSON.parse(localStorage.getItem(cityName + " - 5 Day Forecast"));
 
-    if (todayData !== null && forecastData !== null) {
+    if (todayData && forecastData) {
         console.log(todayData);
         var cityDisplay = document.createElement("h2");
         cityDisplay.textContent = todayData.cityName + " (" + todayData.date.slice(0,-14) + ")";
