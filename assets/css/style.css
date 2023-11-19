@@ -4,6 +4,11 @@
     padding: 0;
 }
 
+/* weather heading */
+.weather-header {
+    background-image: linear-gradient(to right, #4a5ba4, #43478f, #3c347a, #342165, #2c0d50);
+}
+
 /* aside section */
 #form-heading {
     margin-top: 1rem;
