@@ -18,9 +18,14 @@ submitBtn.addEventListener('click', function(event) {
     event.preventDefault();
     var searchInput = document.getElementById("search-input").value.trim();
     console.log(searchInput);
-    // after getting the value and trimming whitespace from the input box, we can capitalise the first letter of the search input
-    var searchCity = searchInput.toLowerCase().charAt(0).toUpperCase() + searchInput.slice(1);
+    /* after getting the value and trimming whitespace from the input box,
+    we can capitalise the first letter of each word in the search input */
+    var searchCity = searchInput.split(" ").map(function(word) {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(" ");
+
     console.log(searchCity);
+
     var searchForm = document.getElementById("search-form");
     searchForm.reset();
 
