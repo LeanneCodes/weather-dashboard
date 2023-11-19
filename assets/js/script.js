@@ -68,14 +68,15 @@ function createButton(cityName) {
 
 
 // displays the button if it doesn't have City Name or 5 Day Forecase appended to it
+// adding .toLowerCase(), stops the dashboard adding both a lowercase city and sentencased city to the dashboard
 function displayButtons() {
     var cities = Object.keys(localStorage);
     cities.forEach(function(city) {
-        if (city !== "City Name" && !city.includes(' - 5 Day Forecast')) {
+        if (city !== "City Name" && !city.includes(' - 5 Day Forecast') && !city.toLowerCase()) {
             createButton(city);
         }
     })
-}
+};
 
 
 // fetches the weather data using the city name and api key first
@@ -111,7 +112,7 @@ function getWeatherData(cityName) {
                     console.log(data);
 
                     var today = {
-                        date: dayjs(),
+                        date: dayjs().$d, // .$d will ensure the correct current date shows
                         city: data.name,
                         icon: data.weather[0].icon,
                         temperature: (data.main.temp - 273.15).toFixed(2) + ' °C',
