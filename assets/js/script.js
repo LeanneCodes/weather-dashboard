@@ -219,6 +219,7 @@ function displayWeatherData(cityName) {
         console.log(todayData);
         var cityDisplay = document.createElement("h2");
         cityDisplay.textContent = todayData.cityName + " (" + todayData.date.slice(0,-14) + ")";
+        cityDisplay.setAttribute("style", "display: inline-flex;");
         console.log(cityDisplay.textContent);
         sectionTodayDiv.append(cityDisplay);
 
@@ -226,6 +227,7 @@ function displayWeatherData(cityName) {
         var iconImg = document.createElement("img");
         iconImg.src = `https://openweathermap.org/img/wn/${todayData.icon}.png`;
         iconImg.alt = "Weather Icon";
+        iconImg.setAttribute("style", "display: inline-flex; margin-bottom: 1rem;")
         sectionTodayDiv.append(iconImg);
 
         var tempData = document.createElement("p");
