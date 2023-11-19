@@ -113,7 +113,7 @@ function getWeatherData(cityName) {
 
                     var today = {
                         date: dayjs().$d, // .$d will ensure the correct current date shows
-                        city: data.name,
+                        cityName: data.name,
                         icon: data.weather[0].icon,
                         temperature: (data.main.temp - 273.15).toFixed(2) + ' °C',
                         wind: (data.wind.speed * 2.23294).toFixed(0) + ' mph', // returns the mph
@@ -176,7 +176,7 @@ function getWeatherData(cityName) {
                 })
                 .then(function() {
                     displayWeatherData(cityName);
-                })
+                });
         });
 
 };
@@ -203,81 +203,85 @@ function displayWeatherData(cityName) {
     // create h1 and p tags for today section
     var todayData = JSON.parse(localStorage.getItem(cityName));
 
-    var cityDisplay = document.createElement("h2");
-    cityDisplay.textContent = todayData.city + " (" + todayData.date.slice(0,-14) + ")";
-    console.log(cityDisplay.textContent);
-    sectionTodayDiv.append(cityDisplay);
-
-    // create an img tag dynamically for the weather icon
-    var iconImg = document.createElement("img");
-    iconImg.src = `https://openweathermap.org/img/wn/${todayData.icon}.png`;
-    iconImg.alt = "Weather Icon";
-    sectionTodayDiv.append(iconImg);
-
-    var tempData = document.createElement("p");
-    tempData.textContent = "Temp: " + todayData.temperature;
-    sectionTodayDiv.append(tempData);
-
-    var windData = document.createElement("p");
-    windData.textContent = "Wind Speed: " + todayData.wind;
-    sectionTodayDiv.append(windData);
-
-    var humidityData = document.createElement("p");
-    humidityData.textContent = "Humidity: " + todayData.humidity;
-    sectionTodayDiv.append(humidityData);
-
     // create the div for the forecast section
     var forecastData = JSON.parse(localStorage.getItem(cityName + " - 5 Day Forecast"));
-    console.log(forecastData);
 
-    var sectionForecastDiv = document.createElement("div");
-    sectionForecastDiv.setAttribute("style", "padding: 15px;");
-    sectionForecastDiv.setAttribute("class", "container-fluid");
-    sectionForecastDiv.setAttribute("data-city", cityName);
-    forecastSection.prepend(sectionForecastDiv);
+    if (todayData !== null && forecastData !== null) {
+        console.log(todayData);
+        var cityDisplay = document.createElement("h2");
+        cityDisplay.textContent = todayData.cityName + " (" + todayData.date.slice(0,-14) + ")";
+        console.log(cityDisplay.textContent);
+        sectionTodayDiv.append(cityDisplay);
 
-    // 5-day forecast title
-    var forecastTitle = document.createElement("h3");
-    forecastTitle.textContent = "5-Day Forecast:";
-    sectionForecastDiv.append(forecastTitle);
-
-    // card container
-    var cardContainer = document.createElement("div");
-    cardContainer.setAttribute("class", "row");
-    sectionForecastDiv.appendChild(cardContainer);
-
-    // convert the forecast day one data into an array
-    var forecastArray = Object.values(forecastData);
-    console.log(forecastArray);
-
-    // iterate through the array and append the values on screen dynamically
-    for (var i = 0; i < forecastArray.length; i++) {
-        var divEl = document.createElement("div");
-        divEl.setAttribute("class", "col weather-card");
-        cardContainer.append(divEl);
-
-        var cardDate = document.createElement("h5");
-        cardDate.textContent = forecastArray[i].date.slice(0,-9);
-        console.log(cardDate);
-        divEl.append(cardDate);
-
-        var cardIcon = document.createElement("img");
-        cardIcon.src = `https://openweathermap.org/img/wn/${forecastArray[i].icon}.png`;
-        cardIcon.alt = "Weather Icon";
-        divEl.append(cardIcon);
+        // create an img tag dynamically for the weather icon
+        var iconImg = document.createElement("img");
+        iconImg.src = `https://openweathermap.org/img/wn/${todayData.icon}.png`;
+        iconImg.alt = "Weather Icon";
+        sectionTodayDiv.append(iconImg);
 
         var tempData = document.createElement("p");
-        tempData.textContent = "Temp: " + (forecastArray[i].temperature - 273.15).toFixed(2) + ' °C';
-        divEl.append(tempData);
+        tempData.textContent = "Temp: " + todayData.temperature;
+        sectionTodayDiv.append(tempData);
 
         var windData = document.createElement("p");
-        windData.textContent = "Wind Speed: " + (forecastArray[i].wind).toFixed(0) + ' mph';
-        divEl.append(windData);
+        windData.textContent = "Wind Speed: " + todayData.wind;
+        sectionTodayDiv.append(windData);
 
         var humidityData = document.createElement("p");
-        humidityData.textContent = "Humidity: " + forecastArray[i].humidity + "%";
-        divEl.append(humidityData);
-    };
+        humidityData.textContent = "Humidity: " + todayData.humidity;
+        sectionTodayDiv.append(humidityData);
 
-    displayButtons(); // buttons are created and displayed after every search
+        console.log(forecastData);
+
+        var sectionForecastDiv = document.createElement("div");
+        sectionForecastDiv.setAttribute("style", "padding: 15px;");
+        sectionForecastDiv.setAttribute("class", "container-fluid");
+        sectionForecastDiv.setAttribute("data-city", cityName);
+        forecastSection.prepend(sectionForecastDiv);
+
+        // 5-day forecast title
+        var forecastTitle = document.createElement("h3");
+        forecastTitle.textContent = "5-Day Forecast:";
+        sectionForecastDiv.append(forecastTitle);
+
+        // card container
+        var cardContainer = document.createElement("div");
+        cardContainer.setAttribute("class", "row");
+        sectionForecastDiv.appendChild(cardContainer);
+
+        // convert the forecast day one data into an array
+        var forecastArray = Object.values(forecastData);
+        console.log(forecastArray);
+
+        // iterate through the array and append the values on screen dynamically
+        for (var i = 0; i < forecastArray.length; i++) {
+            var divEl = document.createElement("div");
+            divEl.setAttribute("class", "col weather-card");
+            cardContainer.append(divEl);
+
+            var cardDate = document.createElement("h5");
+            cardDate.textContent = forecastArray[i].date.slice(0,-9);
+            console.log(cardDate);
+            divEl.append(cardDate);
+
+            var cardIcon = document.createElement("img");
+            cardIcon.src = `https://openweathermap.org/img/wn/${forecastArray[i].icon}.png`;
+            cardIcon.alt = "Weather Icon";
+            divEl.append(cardIcon);
+
+            var tempData = document.createElement("p");
+            tempData.textContent = "Temp: " + (forecastArray[i].temperature - 273.15).toFixed(2) + ' °C';
+            divEl.append(tempData);
+
+            var windData = document.createElement("p");
+            windData.textContent = "Wind Speed: " + (forecastArray[i].wind).toFixed(0) + ' mph';
+            divEl.append(windData);
+
+            var humidityData = document.createElement("p");
+            humidityData.textContent = "Humidity: " + forecastArray[i].humidity + "%";
+            divEl.append(humidityData);
+        };
+
+        displayButtons(); // buttons are created and displayed after every search
+    }
 };
