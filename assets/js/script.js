@@ -15,19 +15,20 @@ var apiKey = "f142d21647feca195690187a6be73e98";
 // the input field is cleared after each search
 var submitBtn = document.getElementById("search-button");
 submitBtn.addEventListener('click', function(event) {
-    var searchInput = document.getElementById("search-input").value;
+    event.preventDefault();
+    var searchInput = document.getElementById("search-input").value.trim();
+    console.log(searchInput);
+    // after getting the value and trimming whitespace from the input box, we can capitalise the first letter of the search input
+    var searchCity = searchInput.toLowerCase().charAt(0).toUpperCase() + searchInput.slice(1);
+    console.log(searchCity);
     var searchForm = document.getElementById("search-form");
     searchForm.reset();
-    event.preventDefault();
-    console.log(searchInput);
-    
 
-
-    if (searchInput !== "") {
-        localStorage.setItem("City Name", searchInput);
-        createButton(searchInput);
-        getWeatherData(searchInput);
-        displayWeatherData(searchInput);
+    if (searchCity !== "") {
+        localStorage.setItem("City Name", searchCity);
+        createButton(searchCity);
+        getWeatherData(searchCity);
+        displayWeatherData(searchCity);
         
     } else {
         submitBtn.setAttribute("disabled", "disabled");
@@ -54,7 +55,7 @@ searchHistory.addEventListener('click', function(event) {
 });
 
 
-// only create a new button if it doesn't currently exist
+// only creates a new button if it doesn't currently exist based on the button's data value
 function createButton(cityName) {
     if (!document.querySelector(`.cityBtn[value="${cityName}"]`)) {
         var cityBtn = document.createElement("button");
@@ -68,11 +69,10 @@ function createButton(cityName) {
 
 
 // displays the button if it doesn't have City Name or 5 Day Forecase appended to it
-// adding .toLowerCase(), stops the dashboard adding both a lowercase city and sentencased city to the dashboard
 function displayButtons() {
     var cities = Object.keys(localStorage);
     cities.forEach(function(city) {
-        if (city !== "City Name" && !city.includes(' - 5 Day Forecast') && !city.toLowerCase()) {
+        if (city !== "City Name" && !city.includes(' - 5 Day Forecast')) {
             createButton(city);
         }
     })
@@ -202,7 +202,6 @@ function displayWeatherData(cityName) {
 
     // create h1 and p tags for today section
     var todayData = JSON.parse(localStorage.getItem(cityName));
-    console.log(todayData);
 
     var cityDisplay = document.createElement("h2");
     cityDisplay.textContent = todayData.city + " (" + todayData.date.slice(0,-14) + ")";
