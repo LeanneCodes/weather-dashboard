@@ -124,7 +124,7 @@ function getWeatherData(cityName) {
                         cityName: data.name,
                         icon: data.weather[0].icon,
                         temperature: (data.main.temp - 273.15).toFixed(2) + ' °C',
-                        wind: (data.wind.speed * 2.23294).toFixed(0) + ' mph', // returns the mph
+                        wind: (data.wind.speed * 2.23294).toFixed(0) + ' MPH', // returns the mph
                         humidity: data.main.humidity + "%"
                     };
                     
@@ -183,7 +183,7 @@ function getWeatherData(cityName) {
                     console.log(fiveDayForecast);
                 })
                 .then(function() {
-                    displayWeatherData(cityName);
+                    displayWeatherData(cityName); // get data first before appending text to created elements
                 });
         });
 
@@ -192,7 +192,7 @@ function getWeatherData(cityName) {
 
 // display data on screen using DOM manipulation
 function displayWeatherData(cityName) {
-    // create the two weather sections of the dashboard
+    // find the two weather sections of the dashboard and store them as variables
     var todaySection = document.getElementById("today");
     var forecastSection = document.getElementById("forecast");
 
@@ -208,10 +208,10 @@ function displayWeatherData(cityName) {
     console.log(sectionTodayDiv.dataset.city);
     todaySection.prepend(sectionTodayDiv);
 
-    // create h1 and p tags for today section
+    // store todays data into a variable
     var todayData = JSON.parse(localStorage.getItem(cityName));
 
-    // create the div for the forecast section
+    // store the forecast data into a variable
     var forecastData = JSON.parse(localStorage.getItem(cityName + " - 5 Day Forecast"));
 
     if (todayData && forecastData) {
@@ -241,6 +241,7 @@ function displayWeatherData(cityName) {
 
         console.log(forecastData);
 
+        // create the forecast container div and set the attributes for it
         var sectionForecastDiv = document.createElement("div");
         sectionForecastDiv.setAttribute("style", "padding: 15px;");
         sectionForecastDiv.setAttribute("class", "container-fluid");
@@ -282,7 +283,7 @@ function displayWeatherData(cityName) {
             divEl.append(tempData);
 
             var windData = document.createElement("p");
-            windData.textContent = "Wind Speed: " + (forecastArray[i].wind).toFixed(0) + ' mph';
+            windData.textContent = "Wind Speed: " + (forecastArray[i].wind).toFixed(0) + ' MPH';
             divEl.append(windData);
 
             var humidityData = document.createElement("p");
