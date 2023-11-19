@@ -26,6 +26,7 @@ submitBtn.addEventListener('click', function(event) {
 
     console.log(searchCity);
 
+    // clears the search input field
     var searchForm = document.getElementById("search-form");
     searchForm.reset();
 
@@ -76,7 +77,7 @@ function createButton(cityName) {
 };
 
 
-// displays the button if it doesn't have City Name or 5 Day Forecase appended to it
+// displays the buttons on screen and removes duplicates
 function displayButtons() {
     var cities = Object.keys(localStorage);
     cities.forEach(function(city) {
