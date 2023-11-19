@@ -85,7 +85,7 @@ function displayButtons() {
 // and then we call the 5 day forecast api using the same lat and lon values for that city
 // both sets of data are stored in objects and saved to local storage
 function getWeatherData(cityName) {
-    var geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
+    var geoQuery = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
     console.log(geoQuery);
 
     fetch(geoQuery)
@@ -124,7 +124,7 @@ function getWeatherData(cityName) {
                     console.log(today);
                 });
 
-            var forecast = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+            var forecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}`;
             console.log(forecast);
 
             fetch(forecast)
@@ -210,7 +210,7 @@ function displayWeatherData(cityName) {
 
     // create an img tag dynamically for the weather icon
     var iconImg = document.createElement("img");
-    iconImg.src = `http://openweathermap.org/img/wn/${todayData.icon}.png`;
+    iconImg.src = `https://openweathermap.org/img/wn/${todayData.icon}.png`;
     iconImg.alt = "Weather Icon";
     sectionTodayDiv.append(iconImg);
 
@@ -262,7 +262,7 @@ function displayWeatherData(cityName) {
         divEl.append(cardDate);
 
         var cardIcon = document.createElement("img");
-        cardIcon.src = `http://openweathermap.org/img/wn/${forecastArray[i].icon}.png`;
+        cardIcon.src = `https://openweathermap.org/img/wn/${forecastArray[i].icon}.png`;
         cardIcon.alt = "Weather Icon";
         divEl.append(cardIcon);
 
