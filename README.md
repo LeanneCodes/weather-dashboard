@@ -2,6 +2,8 @@
 
 A weather application allows users to search for a city, displaying its current weather at the top and the forecasted weather for the next 5 days below. Each search generates a corresponding button. Clicking a button retrieves the latest data for that city.
 
+On screen load, the default city on display is London. This prevents the user from seeing a blank screen when they have no cities saved to local storage.
+
 ## Application Appearance
 
 ![Weather App](./assets/images/weather-application.png)
