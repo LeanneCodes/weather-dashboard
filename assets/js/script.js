@@ -57,7 +57,7 @@ searchHistory.addEventListener('click', function(event) {
     event.preventDefault();
     console.log(event.target.textContent);
     var clickedCityName = event.target.textContent;
-    displayWeatherData(clickedCityName);
+    getWeatherData(clickedCityName);
 });
 
 
