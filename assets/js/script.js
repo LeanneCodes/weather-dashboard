@@ -37,7 +37,6 @@ submitBtn.addEventListener('click', function(event) {
         displayWeatherData(searchCity);
         
     } else {
-        submitBtn.setAttribute("disabled", "disabled");
         alert("Please enter a valid city name.");
         location.reload();
     };
@@ -105,6 +104,7 @@ function getWeatherData(cityName) {
 
             if (data.length === 0) {
                 alert("City does not exist. Please try again.");
+                localStorage.removeItem("City Name");
                 return;
             }
 
