@@ -103,6 +103,11 @@ function getWeatherData(cityName) {
         }).then(function(data) {
             console.log(data);
 
+            if (data.length === 0) {
+                alert("City does not exist. Please try again.");
+                return;
+            }
+
             var lat = data[0].lat;
             console.log(lat);
 
@@ -203,7 +208,7 @@ function displayWeatherData(cityName) {
 
     // create div for the today section
     var sectionTodayDiv = document.createElement("div");
-    sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
+    
     sectionTodayDiv.setAttribute("class", "container-fluid");
     sectionTodayDiv.setAttribute("data-city", cityName);
     console.log(sectionTodayDiv.dataset.city);
@@ -217,6 +222,7 @@ function displayWeatherData(cityName) {
 
     if (todayData && forecastData) {
         console.log(todayData);
+        sectionTodayDiv.setAttribute("style", "border: 1px solid black; padding: 20px;");
         var cityDisplay = document.createElement("h2");
         cityDisplay.textContent = todayData.cityName + " (" + todayData.date.slice(0,-14) + ")";
         cityDisplay.setAttribute("style", "display: inline-flex;");
