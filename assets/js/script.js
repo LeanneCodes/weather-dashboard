@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     if (recentWeatherData) {
         getWeatherData(recentWeatherData);
+    } else {
+        getWeatherData("London");
     };
 });
 
